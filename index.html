@@ -1,0 +1,272 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SGXBattle — Free Fire Tournaments</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(ellipse at 20% 10%, rgba(106,17,203,0.12), transparent 8%),
+                  radial-gradient(ellipse at 90% 90%, rgba(0,200,255,0.06), transparent 10%),
+                  #050406; color:#e6eef8; -webkit-font-smoothing:antialiased;
+      display:flex;align-items:flex-start;justify-content:center;padding:36px;
+      background-attachment: fixed;
+      min-height:100vh;
+    }.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;mix-blend-mode:screen;opacity:.16;
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.0) 0%, rgba(0,0,0,0) 100%);
+}
+.neon-lines::before{
+  content:"";position:fixed;inset:0;background-image:
+    linear-gradient(180deg, rgba(0,255,200,0.03) 0 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,200,0.02) 0 1px, transparent 1px);
+  background-size: 100% 24px, 24px 100%;opacity:.8;filter:blur(1px);
+}
+
+.wrap{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);border-radius:14px;padding:20px;position:relative;z-index:2;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#16a085,#8e44ad);box-shadow:0 6px 25px rgba(142,68,173,0.18);font-weight:800;color:white;font-family:monospace;font-size:18px}
+.site-title{font-weight:800;letter-spacing:1px}
+nav ul{display:flex;gap:12px;align-items:center;list-style:none}
+nav a{color:inherit;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:600}
+nav a:hover{background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));backdrop-filter:blur(4px)}
+
+main{display:grid;grid-template-columns:1fr 420px;gap:18px}
+.hero{padding:28px;border-radius:12px;min-height:300px;background:linear-gradient(135deg, rgba(10,10,15,0.6), rgba(5,6,12,0.6));border:1px solid rgba(0,255,200,0.03);position:relative;overflow:hidden}
+
+.hero h1{font-size:34px;margin-bottom:8px}
+.hero p{color:rgba(230,238,248,0.75);margin-bottom:18px}
+
+.neon-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 40px rgba(0,0,0,0.6)}
+
+.tournaments{display:grid;gap:12px}
+.tournament{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(0,255,200,0.03)}
+.tournament .meta{display:flex;gap:12px;align-items:center}
+.tag{padding:6px 10px;border-radius:8px;font-weight:700;background:rgba(0,0,0,0.25);}
+
+.sidebar{display:flex;flex-direction:column;gap:12px}
+.wallet{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18));border:1px solid rgba(255,255,255,0.03)}
+.balance{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.balance .amount{font-size:28px;font-weight:900}
+.balance .currency{font-size:14px;color:rgba(230,238,248,0.7)}
+
+.form-row{margin-bottom:10px}
+label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+input[type="text"],input[type="number"],select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit}
+.radio-row{display:flex;gap:8px;align-items:center}
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,#00ffd5,#8e44ad);color:#021218;font-weight:800;cursor:pointer}
+
+.pending-list{margin-top:12px}
+.pending-item{padding:10px;border-radius:10px;background:rgba(0,0,0,0.26);margin-bottom:8px;border:1px solid rgba(255,255,255,0.02)}
+
+footer{margin-top:14px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.02);display:flex;justify-content:space-between;font-size:13px;color:rgba(230,238,248,0.6)}
+
+@media (max-width:980px){main{grid-template-columns:1fr} .sidebar{order:2}}
+
+.glow{color:#00ffd5;text-shadow:0 0 8px rgba(0,255,213,0.25),0 0 22px rgba(142,68,173,0.08)}
+
+  </style>
+</head>
+<body>
+  <div class="bg-grid neon-lines"></div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">SGX</div>
+        <div>
+          <div class="site-title">SGXBattle</div>
+          <div style="font-size:12px;color:rgba(230,238,248,0.6)">Free Fire Tournaments • Singapore vibe</div>
+        </div>
+      </div><nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#games">Games</a></li>
+      <li><a href="#support">Customer Support</a></li>
+      <li><a class="btn" href="#wallet">Wallet</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div style="display:flex;justify-content:space-between;gap:14px;align-items:flex-start">
+      <div style="flex:1">
+        <h1 class="glow">SGXBattle — Free Fire Arenas</h1>
+        <p>Welcome to the neon battleground. Join Free Fire tournaments, track your earnings, and withdraw securely. A hacker-inspired neon aesthetic built for pro gamers.</p>
+
+        <div class="neon-card">
+          <h3 style="margin-bottom:8px">Ongoing Tournaments</h3>
+          <div class="tournaments">
+            <div class="tournament">
+              <div class="meta">
+                <div class="tag">FF - Solo</div>
+                <div>
+                  <div style="font-weight:800">Midnight Rush</div>
+                  <div style="font-size:12px;color:rgba(230,238,248,0.6)">Prizepool: $250 • Starts: 10:00 PM</div>
+                </div>
+              </div>
+              <div><button class="btn">Join</button></div>
+            </div>
+
+            <div class="tournament">
+              <div class="meta">
+                <div class="tag">FF - Squad</div>
+                <div>
+                  <div style="font-weight:800">LionCity Clash</div>
+                  <div style="font-size:12px;color:rgba(230,238,248,0.6)">Prizepool: $600 • Starts: 08:00 PM</div>
+                </div>
+              </div>
+              <div><button class="btn">Join</button></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div style="width:200px">
+        <div style="padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.006));border:1px solid rgba(0,255,200,0.03)">
+          <div style="font-size:12px;color:rgba(230,238,248,0.6)">Next Match</div>
+          <div style="font-weight:800;margin-top:6px">Ranked Royale</div>
+          <div style="margin-top:10px;font-size:13px;color:rgba(230,238,248,0.7)">Map: Bermuda • Mode: Battle Royale</div>
+          <div style="margin-top:12px"><button class="btn">See Rules</button></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <aside class="sidebar">
+    <div class="wallet neon-card" id="wallet">
+      <div class="balance">
+        <div>
+          <div style="font-size:12px;color:rgba(230,238,248,0.6)">Wallet Balance</div>
+          <div class="amount" id="balanceAmt">$100.00</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:rgba(230,238,248,0.6)">Currency</div>
+          <div style="font-weight:800">USD</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;color:rgba(230,238,248,0.7);margin-bottom:8px">Withdraw funds — choose one method and provide the required details.</div>
+
+      <div class="form-row">
+        <label>Amount (USD)</label>
+        <input type="number" id="amount" placeholder="Enter amount e.g. 20" min="1" />
+      </div>
+
+      <div class="form-row">
+        <label>Withdraw Method</label>
+        <div class="radio-row">
+          <label><input type="radio" name="method" value="bep" checked> BEP-20</label>
+          <label><input type="radio" name="method" value="bank"> Bank Transfer</label>
+          <label><input type="radio" name="method" value="paypal"> PayPal</label>
+        </div>
+      </div>
+
+      <div id="methodDetails">
+        <div id="bepDetails">
+          <div class="form-row">
+            <label>BEP-20 Wallet Address</label>
+            <input type="text" id="bepAddr" placeholder="0x... or paste BEP20 address" value="0xBEP20ExampleAddress1234567890" />
+          </div>
+        </div>
+
+        <div id="bankDetails" style="display:none">
+          <div class="form-row">
+            <label>Select Bank</label>
+            <select id="bankSelect">
+              <option value="SingBank">SingBank</option>
+              <option value="MarinaTrust">MarinaTrust Bank</option>
+              <option value="IslandNational">Island National Bank</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Account Holder Name</label>
+            <input type="text" id="acctName" placeholder="Name on account" value="" />
+          </div>
+          <div class="form-row">
+            <label>Account Number</label>
+            <input type="text" id="acctNum" placeholder="Enter account number" value="" />
+          </div>
+          <div class="form-row">
+            <label>IFSC Code</label>
+            <input type="text" id="ifscCode" placeholder="Enter IFSC code" value="" />
+          </div>
+        </div>
+
+        <div id="paypalDetails" style="display:none">
+          <div class="form-row">
+            <label>PayPal Email</label>
+            <input type="text" id="ppEmail" placeholder="you@example.com" value="" />
+          </div>
+          <div style="font-size:12px;color:rgba(230,238,248,0.6);margin-top:6px">Ensure your PayPal account is verified before withdrawing.</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" id="withdrawBtn">Withdraw</button>
+      </div>
+
+      <div class="pending-list" id="pendingList">
+        <div style="font-weight:800;margin-top:12px">Pending Withdrawals</div>
+      </div>
+
+    </div>
+
+    <div class="neon-card" style="padding:12px">
+      <div style="font-weight:800;margin-bottom:8px">Customer Support</div>
+      <div style="font-size:13px;color:rgba(230,238,248,0.7)">If you face any issues, email <strong>support@sgxbattle.gg</strong> or open a ticket.</div>
+      <div style="margin-top:10px"><button class="btn">Open Support Ticket</button></div>
+    </div>
+
+  </aside>
+
+</main>
+
+<footer>
+  <div>© SGXBattle — Built for Free Fire players</div>
+  <div>Made with ♥ in Neon • Singapore vibe</div>
+</footer>
+
+  </div>  <script>
+    const balanceEl = document.getElementById('balanceAmt');
+    let balance = 100.00;
+
+    function fmt(v){return '$'+Number(v).toFixed(2)}
+    function refreshBalance(){balanceEl.textContent = fmt(balance)}
+    refreshBalance();
+
+    const radios = document.querySelectorAll('input[name="method"]');
+    const bepDetails = document.getElementById('bepDetails');
+    const bankDetails = document.getElementById('bankDetails');
+    const paypalDetails = document.getElementById('paypalDetails');
+
+    radios.forEach(r=>r.addEventListener('change',()=>{
+      bepDetails.style.display = r.value==='bep' ? 'block' : 'none';
+      bankDetails.style.display = r.value==='bank' ? 'block' : 'none';
+      paypalDetails.style.display = r.value==='paypal' ? 'block' : 'none';
+    }));
+
+    const pendingList = document.getElementById('pendingList');
+
+    document.getElementById('withdrawBtn').addEventListener('click', ()=>{
+      const amt = Number(document.getElementById('amount').value || 0);
+      if(!amt || amt<=0){alert('Enter a valid amount to withdraw'); return}
+      if(amt>balance){alert('Insufficient balance'); return}
+
+      const method = document.querySelector('input[name="method"]:checked').value;
+      let details='';
+      if(method==='bep'){
+        details = document.getElementById('bepAddr').value || '(no address)';
+      }else if(method==='bank'){
+        const bank = document.getElementById('bankSelect').value;
+        const name =
