@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     body {
       font-family: 'Poppins', sans-serif;
       color: #fff;
-      background: url('https://i.gifer.com/3kzC.gif') no-repeat center center fixed;
+      background: url('https://media.giphy.com/media/1yk0v6WtCinQSYwLz0/giphy.gif') no-repeat center center fixed;
       background-size: cover;
       min-height: 100vh;
       display: flex;
@@ -96,56 +97,58 @@
     <header>
       <h1>SGXBattle Wallet</h1>
       <p>Free Fire Tournament Earnings</p>
-    </header><div class="balance">
-  <small>Wallet Balance</small>
-  <span id="balance">$100.00</span>
-</div>
+    </header>
+    <div class="balance">
+      <small>Wallet Balance</small>
+      <span id="balance">$100.00</span>
+    </div>
 
-<div class="form-section">
-  <label>Amount (USD)</label>
-  <input type="number" id="amount" placeholder="Enter amount" min="1">
+    <div class="form-section">
+      <label>Amount (USD)</label>
+      <input type="number" id="amount" placeholder="Enter amount" min="1">
 
-  <div class="methods">
-    <label><input type="radio" name="method" value="bep20" checked> BEP-20</label>
-    <label><input type="radio" name="method" value="bank"> Bank</label>
-    <label><input type="radio" name="method" value="paypal"> PayPal</label>
+      <div class="methods">
+        <label><input type="radio" name="method" value="bep20" checked> BEP-20</label>
+        <label><input type="radio" name="method" value="bank"> Bank</label>
+        <label><input type="radio" name="method" value="paypal"> PayPal</label>
+      </div>
+
+      <div id="bep20Form">
+        <label>BEP-20 Wallet Address</label>
+        <input type="text" id="bepAddr" placeholder="Enter BEP-20 Address">
+      </div>
+
+      <div id="bankForm" style="display:none;">
+        <label>Bank Name</label>
+        <input type="text" id="bankName" placeholder="Enter Bank Name">
+        <label>Account Holder Name</label>
+        <input type="text" id="acctName" placeholder="Enter Account Holder Name">
+        <label>Account Number</label>
+        <input type="text" id="acctNum" placeholder="Enter Account Number">
+        <label>IFSC Code</label>
+        <input type="text" id="ifsc" placeholder="Enter IFSC Code">
+      </div>
+
+      <div id="paypalForm" style="display:none;">
+        <label>PayPal Email</label>
+        <input type="email" id="paypalEmail" placeholder="Enter PayPal Email">
+      </div>
+
+      <button id="withdrawBtn">Withdraw</button>
+
+      <div class="pending">
+        <strong>Pending Withdrawals</strong>
+        <div id="pendingList"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Need help? <a href="https://t.me/requestusdt" class="telegram-link" target="_blank">Contact Telegram Support</a></p>
+      <p>© 2025 SGXBattle — All rights reserved</p>
+    </footer>
   </div>
 
-  <div id="bep20Form">
-    <label>BEP-20 Wallet Address</label>
-    <input type="text" id="bepAddr" placeholder="Enter BEP-20 Address">
-  </div>
-
-  <div id="bankForm" style="display:none;">
-    <label>Bank Name</label>
-    <input type="text" id="bankName" placeholder="Enter Bank Name">
-    <label>Account Holder Name</label>
-    <input type="text" id="acctName" placeholder="Enter Account Holder Name">
-    <label>Account Number</label>
-    <input type="text" id="acctNum" placeholder="Enter Account Number">
-    <label>IFSC Code</label>
-    <input type="text" id="ifsc" placeholder="Enter IFSC Code">
-  </div>
-
-  <div id="paypalForm" style="display:none;">
-    <label>PayPal Email</label>
-    <input type="email" id="paypalEmail" placeholder="Enter PayPal Email">
-  </div>
-
-  <button id="withdrawBtn">Withdraw</button>
-
-  <div class="pending">
-    <strong>Pending Withdrawals</strong>
-    <div id="pendingList"></div>
-  </div>
-</div>
-
-<footer>
-  <p>Need help? <a href="https://t.me/requestusdt" class="telegram-link" target="_blank">Contact Telegram Support</a></p>
-  <p>© 2025 SGXBattle — All rights reserved</p>
-</footer>
-
-  </div>  <script>
+  <script>
     const balanceEl = document.getElementById('balance');
     let balance = 100.00;
 
@@ -186,5 +189,6 @@
       item.textContent = `${amount}$ - ${method.toUpperCase()} (${details}) — Pending`;
       pendingList.appendChild(item);
     });
-  </script></body>
-  </html>
+  </script>
+</body>
+</html>
