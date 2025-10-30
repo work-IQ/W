@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGXBattle — Mobile Free Fire Wallet</title>
+  <title>Free Fire — UID Connect</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -30,8 +30,41 @@
       margin-bottom: 20px;
     }
     header h1 {
-      font-size: 28px;
+      font-size: 30px;
       color: #00ffd5;
+      text-shadow: 0 0 10px #00ffd5, 0 0 20px #8e44ad;
+      font-weight: 700;
+    }
+    .uid-section {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .uid-section input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-top: 10px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+    }
+    .uid-section button {
+      margin-top: 10px;
+      background: linear-gradient(90deg,#00ffd5,#8e44ad);
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #00ffd5;
+      font-weight: bold;
       text-shadow: 0 0 8px #00ffd5;
     }
     .balance {
@@ -46,148 +79,52 @@
       font-size: 22px;
       font-weight: bold;
     }
-    .form-section { margin-top: 15px; }
-    label { font-size: 14px; display: block; margin: 8px 0 4px; }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      font-size: 14px;
-    }
-    .methods { display: flex; justify-content: space-around; margin: 10px 0; }
-    .methods label { cursor: pointer; }
-    button {
-      background: linear-gradient(90deg,#00ffd5,#8e44ad);
-      border: none;
-      color: #000;
-      padding: 10px 15px;
-      border-radius: 10px;
-      font-weight: bold;
-      margin-top: 10px;
-      cursor: pointer;
-      width: 100%;
-    }
-    .pending { margin-top: 15px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; }
-    .pending-item { margin-top: 8px; padding: 10px; border: 1px solid rgba(0,255,200,0.2); border-radius: 8px; }
     footer { text-align: center; font-size: 13px; color: #aaa; margin-top: 20px; }
     a.telegram-link { color: #00ffd5; text-decoration: none; font-weight: bold; }
-    @media (min-width: 768px) {
-      body::before {
-        content: '⚠️ This site is available only on mobile devices.';
-        color: white;
-        font-size: 20px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.8);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px #00ffd5;
-      }
-      .container { display: none; }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>SGXBattle Wallet</h1>
-      <p>Free Fire Tournament Earnings</p>
+      <h1>🔥 FREE FIRE UID CONNECT 🔥</h1>
+      <p>Secure Wallet Sync</p>
     </header>
-    <div class="balance">
-      <small>Wallet Balance</small>
-      <span id="balance">$10.00</span>
+
+    <div class="uid-section">
+      <label>Enter your UID</label><br>
+      <input type="text" id="uidInput" placeholder="Enter Free Fire UID">
+      <br>
+      <button id="connectBtn">Connect</button>
+      <div id="status" class="status"></div>
     </div>
 
-    <div class="form-section">
-      <label>Amount (USD)</label>
-      <input type="number" id="amount" placeholder="Enter amount" min="1">
-
-      <div class="methods">
-        <label><input type="radio" name="method" value="bep20" checked> BEP-20</label>
-        <label><input type="radio" name="method" value="bank"> Bank</label>
-        <label><input type="radio" name="method" value="paypal"> PayPal</label>
-      </div>
-
-      <div id="bep20Form">
-        <label>BEP-20 Wallet Address</label>
-        <input type="text" id="bepAddr" placeholder="Enter BEP-20 Address">
-      </div>
-
-      <div id="bankForm" style="display:none;">
-        <label>Bank Name</label>
-        <input type="text" id="bankName" placeholder="Enter Bank Name">
-        <label>Account Holder Name</label>
-        <input type="text" id="acctName" placeholder="Enter Account Holder Name">
-        <label>Account Number</label>
-        <input type="text" id="acctNum" placeholder="Enter Account Number">
-        <label>IFSC Code</label>
-        <input type="text" id="ifsc" placeholder="Enter IFSC Code">
-      </div>
-
-      <div id="paypalForm" style="display:none;">
-        <label>PayPal Email</label>
-        <input type="email" id="paypalEmail" placeholder="Enter PayPal Email">
-      </div>
-
-      <button id="withdrawBtn">Withdraw</button>
-
-      <div class="pending">
-        <strong>Pending Withdrawals</strong>
-        <div id="pendingList"></div>
-      </div>
+    <div class="balance">
+      <small>Wallet Balance</small>
+      <span id="balance">$0.00</span>
     </div>
 
     <footer>
       <p>Need help? <a href="https://t.me/requestusdt" class="telegram-link" target="_blank">Contact Telegram Support</a></p>
-      <p>© 2025 SGXBattle — All rights reserved</p>
+      <p>© 2025 Free Fire Max — All Rights Reserved</p>
     </footer>
   </div>
 
   <script>
+    const connectBtn = document.getElementById('connectBtn');
+    const statusEl = document.getElementById('status');
     const balanceEl = document.getElementById('balance');
-    let balance = 100.00;
 
-    function updateBalanceDisplay() {
-      balanceEl.textContent = `$${balance.toFixed(2)}`;
-    }
+    connectBtn.addEventListener('click', () => {
+      const uid = document.getElementById('uidInput').value.trim();
+      if (!uid) return alert('Please enter your UID');
 
-    const pendingList = document.getElementById('pendingList');
+      statusEl.textContent = '🔄 Connecting...';
+      balanceEl.textContent = '$0.00';
 
-    document.querySelectorAll('input[name="method"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        document.getElementById('bep20Form').style.display = radio.value === 'bep20' ? 'block' : 'none';
-        document.getElementById('bankForm').style.display = radio.value === 'bank' ? 'block' : 'none';
-        document.getElementById('paypalForm').style.display = radio.value === 'paypal' ? 'block' : 'none';
-      });
-    });
-
-    document.getElementById('withdrawBtn').addEventListener('click', () => {
-      const amount = parseFloat(document.getElementById('amount').value);
-      if (!amount || amount <= 0) return alert('Enter a valid amount');
-      if (amount > balance) return alert('Insufficient balance');
-
-      balance -= amount;
-      updateBalanceDisplay();
-
-      const method = document.querySelector('input[name="method"]:checked').value;
-      let details = '';
-      if (method === 'bep20') {
-        details = `BEP-20 → ${document.getElementById('bepAddr').value}`;
-      } else if (method === 'bank') {
-        details = `Bank: ${document.getElementById('bankName').value}, IFSC: ${document.getElementById('ifsc').value}`;
-      } else if (method === 'paypal') {
-        details = `PayPal: ${document.getElementById('paypalEmail').value}`;
-      }
-
-      const item = document.createElement('div');
-      item.classList.add('pending-item');
-      item.textContent = `${amount}$ - ${method.toUpperCase()} (${details}) — Pending`;
-      pendingList.appendChild(item);
+      setTimeout(() => {
+        statusEl.textContent = '✅ Connected';
+        balanceEl.textContent = '$10.00';
+      }, 5000);
     });
   </script>
 </body>
